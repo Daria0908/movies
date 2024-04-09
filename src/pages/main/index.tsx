@@ -3,6 +3,7 @@ import { AppDispatch, RootState } from "../../stores";
 import { ChangeEvent, useEffect } from "react";
 import { fetchMovies } from "../../stores/movies/thunk";
 import { setLimit, setPage } from "../../stores/movies";
+import { Link } from "react-router-dom";
 
 const useAppDispatch = () => useDispatch<AppDispatch>();
 
@@ -38,22 +39,23 @@ const MainPage: React.FC = () => {
       <h1>Список фильмов</h1>
       <div>
         <select value={limit} onChange={handleLimit}>
-          <option value={5}>5</option>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={30}>30</option>
         </select>
       </div>
-      <ul>
+      <ol>
         {movies &&
           movies.map((movie) => (
             <li key={movie.id}>
-              <p>{movie.name}</p>
-              <p>{movie.shortDescription}</p>
-              <p>{movie.year}</p>
+              <Link to={`/${movie.id}`}>
+                <p>{movie.name}</p>
+                <p>{movie.shortDescription}</p>
+                <p>{movie.year}</p>
+              </Link>
             </li>
           ))}
-      </ul>
+      </ol>
       <div className="pages">
         <button onClick={handlePrevPage} disabled={currentPage === 1}>
           Предыдущая страница

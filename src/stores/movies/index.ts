@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchMovies } from "./thunk";
+import { fetchMovies, fetchMovie } from "./thunk";
 
 export interface IMovie {
-  id: number;
+  id: number | string;
   name: string;
   description: string;
   shortDescription: string;
@@ -16,6 +16,7 @@ interface IMoviesState {
   totalPages: number;
   loading: boolean;
   error: string | null | any;
+  currentMovie: IMovie | null;
 }
 
 const initialState: IMoviesState = {
@@ -25,6 +26,7 @@ const initialState: IMoviesState = {
   totalPages: 1,
   loading: false,
   error: null,
+  currentMovie: null
 };
 
 const moviesSlice = createSlice({
@@ -57,6 +59,17 @@ const moviesSlice = createSlice({
       .addCase(fetchMovies.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchMovie.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchMovie.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentMovie = action.payload;
+      })
+      .addCase(fetchMovie.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || null;
       });
   },
 });

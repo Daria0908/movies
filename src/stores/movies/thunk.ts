@@ -23,3 +23,10 @@ export const fetchMovies = createAsyncThunk(
     }
   }
 );
+
+
+export const fetchMovie = createAsyncThunk(
+  'movies/fetchMovie', async (id: number) => {
+  const response = await instance.get(`/movie/${id}`);
+  return response.data;
+});

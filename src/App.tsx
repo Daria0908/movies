@@ -11,7 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<MainPage />} />
-          <Route path={"/:id"} element={<ElementPage id={1} />} />
+          <Route path={"/:id"} element={<ElementPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>
