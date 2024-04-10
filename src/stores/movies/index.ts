@@ -29,5 +29,4 @@ const moviesSlice = createSlice({
   },
 });
 
-
 export default moviesSlice.reducer;

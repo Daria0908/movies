@@ -2,16 +2,13 @@ export interface IPage {
     page: number;
     totalPage?: number;
     limit: number;
-    filters?: IFilter;
-    searchTerm?: string;
-}
+    year?: number | null;
+    countries?: string | null;
+    ageRating?: string | null;
 
-export interface IFilter {
-  year: number;
-  country: string;
-  ageRating: string;
-  genre? : string[];
-  content?: string;
-  ratingKp? : number;
-  production?: string;
+    genre?: string | string[];
+    content?: string;
+    ratingKp?: number;
+    production?: string;
+    searchTerm?: string | null;
 }

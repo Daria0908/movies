@@ -8,11 +8,11 @@ const useAppDispatch = () => useDispatch<AppDispatch>();
 
 const ElementPage: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { id } = useParams<{id?: string}>();
+  const { id } = useParams<{ id?: string }>();
   const movieId = id ? parseInt(id, 10) : undefined;
-  const {movie, loading, error} = useSelector((state: RootState) => state.movie);
+  const { movie, loading, error } = useSelector((state: RootState) => state.movie);
 
-  
+
   useEffect(() => {
     if (typeof movieId === 'number' && !isNaN(movieId)) {
       dispatch(fetchMovie(movieId))
@@ -24,8 +24,8 @@ const ElementPage: React.FC = () => {
 
   return (
     <div>
-      <p>{movie?.id}</p>
       <p>{movie?.name}</p>
+      <p>{movie?.shortDescription}</p>
     </div>
   );
 };
