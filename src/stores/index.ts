@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import moviesReducer from "../stores/movies/index";
+import moviesReducer from "./movies/index";
+import pageReducer from './page/index';
+import movieReducer from './movie/index';
 
 const store = configureStore({
   reducer: {
     movies: moviesReducer,
+    page: pageReducer,
+    movie: movieReducer,
   },
 });
 

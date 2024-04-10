@@ -1,22 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import instance from "../axiosConfig";
-import { IMovie, setLoading, setTotalPage } from ".";
-
-export interface FetchMoviesPayload {
-  limit: number;
-  page: number;
-}
+import instance from "./axiosConfig";
+import { IPage } from "../models/IPage";
+import { IMovie } from "../models/IMovie";
+import { setTotalPage } from "./page";
 
 export const fetchMovies = createAsyncThunk(
   "movies/fetchMovies",
 
-  async (payload: FetchMoviesPayload, { dispatch }): Promise<IMovie[]> => {
-    const { limit, page } = payload;
+  async (payload: IPage, { dispatch }): Promise<IMovie[]> => {
+    const {page, limit} = payload;
+
     try {
-      dispatch(setLoading(true));
+      
       const response = await instance.get<{ docs: IMovie[]; pages: number }>(`/movie?page=${page}&limit=${limit}`);
-      dispatch(setLoading(false));
-      dispatch(setTotalPage(response.data.pages));
+      dispatch(setTotalPage(response.data.pages))
       return response.data.docs;
     } catch (error: any) {
       throw error.message;
@@ -26,7 +23,9 @@ export const fetchMovies = createAsyncThunk(
 
 
 export const fetchMovie = createAsyncThunk(
-  'movies/fetchMovie', async (id: number) => {
+  'movie/fetchMovie',
+  
+  async (id: number) => {
   const response = await instance.get(`/movie/${id}`);
   return response.data;
 });
