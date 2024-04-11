@@ -4,6 +4,7 @@ import MainPage from "./pages/main";
 import ElementPage from "./pages/element";
 import { Provider } from "react-redux";
 import store from "./stores";
+import RandomPage from "./pages/random";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<MainPage />} />
           <Route path={"/:id"} element={<ElementPage />} />
+          <Route path={"/random"} element={<RandomPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>

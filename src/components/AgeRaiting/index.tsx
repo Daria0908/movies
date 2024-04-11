@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import raitingList from './data';
 
 interface AgeRaitingDropdownProps {
   selectedAgeRaiting: string | null;
@@ -6,7 +7,7 @@ interface AgeRaitingDropdownProps {
 }
 
 const AgeRaitingDropdown: React.FC<AgeRaitingDropdownProps> = ({ selectedAgeRaiting, onChange }) => {
-  const [options] = useState(['g', 'nc17', 'pg', 'pg13', 'r!']);
+  const raiting: {[key: string]: string} = raitingList;
 
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -21,8 +22,8 @@ const AgeRaitingDropdown: React.FC<AgeRaitingDropdownProps> = ({ selectedAgeRait
       value={selectedAgeRaiting !== null ? selectedAgeRaiting : ''}
       onChange={handleChange}>
         <option value="">Выберите взрастное ограничение</option>
-        {options.map((age) => (
-          <option key={age} value={age}>
+        {Object.entries(raiting).map(([code, age]) => (
+          <option key={code} value={code}>
             {age}
           </option>
         ))}

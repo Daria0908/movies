@@ -1,4 +1,4 @@
-const data = {
+const countriesList = {
         "AU": "Австралия",
         "AT": "Австрия",
         "AZ": "Азербайджан",
@@ -190,4 +190,4 @@ const data = {
 
 }
 
-export default data;
+export default countriesList;

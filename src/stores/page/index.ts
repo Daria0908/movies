@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { IPage } from "../../models/IPage";
+import { IMovie } from "../../models/IMovie";
 
 const initialState: IPage = {
     page: 1,
-    totalPage: 1,
     limit: 10,
     searchTerm: null,
+    isSearching: false
 }
 
 const pageSlice = createSlice({
@@ -22,24 +23,23 @@ const pageSlice = createSlice({
             state.totalPage = action.payload
         },
         setYear: (state, action: PayloadAction<number | null>) => {
-            if (state.year) {
-                state.year = action.payload
-            } else state.year = null;
+            state.year = action.payload
         },
         setCountry: (state, action: PayloadAction<string | null>) => {
-            if (state.countries) {
-                state.countries = action.payload
-            } else state.countries = null;
+            state.countries = action.payload
         },
         setAgeRating: (state, action: PayloadAction<string | null>) => {
-            if (state.ageRating) {
-                state.ageRating = action.payload
-            } else state.ageRating = null;
+            state.ageRating = action.payload
         },
-
-    }
+        toggleSerach: (state) => {
+            state.isSearching = true;
+        },
+        setSearch: (state, action: PayloadAction<string | null>) => {
+            state.search = action.payload
+        },
+    },
 })
 
-export const { setLimit, setPage, setTotalPage, setYear, setCountry, setAgeRating } = pageSlice.actions;
+export const { setLimit, setPage, setTotalPage, setYear, setCountry, setAgeRating, toggleSerach, setSearch } = pageSlice.actions;
 
 export default pageSlice.reducer;

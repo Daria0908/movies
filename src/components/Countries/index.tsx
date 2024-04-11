@@ -1,4 +1,4 @@
-import data from './data';
+import countriesList from './data';
 
 interface CountryDropdownProps {
     selecterCountry: string | null;
@@ -6,7 +6,7 @@ interface CountryDropdownProps {
 }
 
 const CountryDropdown: React.FC<CountryDropdownProps> = ({ onChange, selecterCountry }) => {
-    const countries: { [key: string]: string } = data;
+    const countries: { [key: string]: string } = countriesList;
 
 
  
