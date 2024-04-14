@@ -16,17 +16,16 @@ const MainPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { movies, loading, error } = useSelector((state: RootState) => state.movies);
   const { page, limit, year, countries, ageRating, search, isSearching } = useSelector((state: RootState) => state.page);
-  const { isLogged } = useSelector((state: RootState) => state.auth)
+  const { isLogged } = useSelector((state: RootState) => state.auth);
   const [selectedLimit, setSelectedLimit] = useState<number>(limit);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [selectedAgeRaiting, setSelectedAgeRaiting] = useState<string | null>(null);
-  const [searchInput, setSeacrhInput] = useState<string>('');
+  const [searchInput, setSeacrhInput] = useState<string>("");
 
   useEffect(() => {
     dispatch(fetchMovies({ limit, page, year, countries, ageRating, search, isSearching }));
-  }, [dispatch, limit, page]);
-
+  }, [dispatch, limit, page, year, countries, ageRating, search, isSearching]);
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -43,13 +42,13 @@ const MainPage: React.FC = () => {
 
   const changePage = (newPage: number) => {
     dispatch(setPage(newPage));
-    dispatch(fetchMovies({ limit, page: newPage, year, countries, ageRating, search, isSearching}));
+    dispatch(fetchMovies({ limit, page: newPage, year, countries, ageRating, search, isSearching }));
   };
 
   const handleYear = (selectedYear: number | null) => {
     setSelectedYear(selectedYear);
     dispatch(setYear(selectedYear));
-    dispatch(fetchMovies({ limit, page, year: selectedYear, countries, ageRating, search, isSearching}));
+    dispatch(fetchMovies({ limit, page, year: selectedYear, countries, ageRating, search, isSearching }));
   };
 
   const handleCountry = (selectedCountry: string | null) => {
@@ -60,25 +59,25 @@ const MainPage: React.FC = () => {
 
   const handleAgeRaiting = (selectedAgeRaiting: string | null) => {
     setSelectedAgeRaiting(selectedAgeRaiting);
-    dispatch(setAgeRating(selectedAgeRaiting))
+    dispatch(setAgeRating(selectedAgeRaiting));
     dispatch(fetchMovies({ limit, page, year, countries, ageRating: selectedAgeRaiting, search, isSearching }));
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(toggleSerach());
     dispatch(setSearch(event.target.value));
-    setSeacrhInput(event.target.value)
+    setSeacrhInput(event.target.value);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleSearch();
     }
   };
 
   const handleSearch = () => {
     dispatch(toggleSerach());
-    dispatch(fetchMovies({ limit, page, search: searchInput, isSearching} ))
+    dispatch(fetchMovies({ limit, page, search: searchInput, isSearching }));
   };
 
   return (
@@ -86,35 +85,23 @@ const MainPage: React.FC = () => {
       <h1>Список фильмов</h1>
       <AuthInput />
 
-      {isLogged && <button >
-        <Link to={'/random'}>Случайный</Link>
-      </button>}
+      {isLogged && (
+        <button>
+          <Link to={"/random"}>Случайный</Link>
+        </button>
+      )}
       <div>
-      <input
-        type="text"
-        value={searchInput!}
-        onChange={handleInputChange}
-        onKeyDown={handleKeyPress}
-      />
-      <button onClick={handleSearch} disabled={searchInput === ''}>
-        Search
-      </button>
-    </div>
+        <input type="text" value={searchInput!} onChange={handleInputChange} onKeyDown={handleKeyPress} />
+        <button onClick={handleSearch} disabled={searchInput === ""}>
+          Search
+        </button>
+      </div>
 
-      <LimitDropdown
-        onChange={handleLimit}
-        selectedCount={selectedLimit}
-      />
+      <LimitDropdown onChange={handleLimit} selectedCount={selectedLimit} />
 
       <YearDropdown onChange={handleYear} selectedYear={selectedYear} />
-      <CountryDropdown
-        onChange={handleCountry}
-        selecterCountry={selectedCountry}
-      />
-      <AgeRaitingDropdown
-        onChange={handleAgeRaiting}
-        selectedAgeRaiting={selectedAgeRaiting}
-      />
+      <CountryDropdown onChange={handleCountry} selecterCountry={selectedCountry} />
+      <AgeRaitingDropdown onChange={handleAgeRaiting} selectedAgeRaiting={selectedAgeRaiting} />
 
       <ol>
         {movies &&
@@ -129,16 +116,11 @@ const MainPage: React.FC = () => {
           ))}
       </ol>
       <div className="pages">
-        <button
-          onClick={handlePrevPage}
-          disabled={page === 1}
-        >
+        <button onClick={handlePrevPage} disabled={page === 1}>
           Предыдущая страница
         </button>
         <p>{page}</p>
-        <button
-          onClick={handleNextPage}
-        >Следующая страница</button>
+        <button onClick={handleNextPage}>Следующая страница</button>
       </div>
     </div>
   );

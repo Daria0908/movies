@@ -6,6 +6,7 @@ import { setAgeRating, setCountry, setYear } from "../../stores/page";
 import YearDropdown from "../../components/Years";
 import CountryDropdown from "../../components/Countries";
 import AgeRaitingDropdown from "../../components/AgeRaiting";
+import BtnBack from "../../components/BtnBack";
 
 const useAppDispatch = () => useDispatch<AppDispatch>();
 
@@ -18,8 +19,8 @@ const RandomPage: React.FC = () => {
   const [selectedAgeRaiting, setSelectedAgeRaiting] = useState<string | null>(null);
 
   useEffect(() => {
-    dispatch(fetchRandomMovie({ limit, page, year, countries, ageRating }))
-  }, [])
+    dispatch(fetchRandomMovie({ limit, page, year, countries, ageRating }));
+  }, []);
 
   const handleMovie = () => {
     dispatch(fetchRandomMovie({ limit, page, year, countries, ageRating }));
@@ -39,7 +40,7 @@ const RandomPage: React.FC = () => {
 
   const handleAgeRaiting = (selectedAgeRaiting: string | null) => {
     setSelectedAgeRaiting(selectedAgeRaiting);
-    dispatch(setAgeRating(selectedAgeRaiting))
+    dispatch(setAgeRating(selectedAgeRaiting));
     dispatch(fetchRandomMovie({ limit, page, year, countries, ageRating: selectedAgeRaiting }));
   };
 
@@ -48,18 +49,11 @@ const RandomPage: React.FC = () => {
 
   return (
     <div>
-      <button onClick={handleMovie}>
-        Случайный
-      </button> 
-       <YearDropdown onChange={handleYear} selectedYear={selectedYear} />
-      <CountryDropdown
-        onChange={handleCountry}
-        selecterCountry={selectedCountry}
-      />
-      <AgeRaitingDropdown
-        onChange={handleAgeRaiting}
-        selectedAgeRaiting={selectedAgeRaiting}
-      />
+      <BtnBack />
+      <button onClick={handleMovie}>Случайный</button>
+      <YearDropdown onChange={handleYear} selectedYear={selectedYear} />
+      <CountryDropdown onChange={handleCountry} selecterCountry={selectedCountry} />
+      <AgeRaitingDropdown onChange={handleAgeRaiting} selectedAgeRaiting={selectedAgeRaiting} />
       <p>{randomMovie?.name}</p>
       <p>{randomMovie?.id}</p>
     </div>
